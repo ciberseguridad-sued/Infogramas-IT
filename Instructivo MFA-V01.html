@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Detallada de Configuración de MFA - Sued & Fargesa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos Premium para un Diseño Impactante */
+        :root {
+            --primary-color: #005A9E; /* Azul corporativo oscuro */
+            --secondary-color: #0078D4; /* Azul Microsoft */
+            --accent-color: #D63028; /* Rojo corporativo */
+            --text-color: #202020;
+            --text-light: #606060;
+            --bg-color: #f4f7fc;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --border-color: #e0e5ec;
+            --shadow: 0 8px 32px rgba(0, 90, 158, 0.12);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 64rem;
+            margin: auto;
+            padding: 0 1rem;
+        }
+
+        h1, h2, h3 {
+            font-weight: 800;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+        }
+        h1 { font-size: 2.5rem; color: white; }
+        h2 { font-size: 1.75rem; }
+        h3 { font-size: 1.25rem; color: var(--secondary-color); margin-bottom: 0.5rem;}
+        p { margin-top: 0.5rem; color: var(--text-light); font-size: 1rem; }
+        a { color: var(--secondary-color); text-decoration: none; font-weight: 600; }
+        a:hover { text-decoration: underline; }
+
+        .hero-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 4rem 2rem;
+            border-radius: 0 0 40px 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: -2rem; /* To overlap with the first card */
+            z-index: 1;
+        }
+        .hero-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 30%);
+            transform: rotate(45deg);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+        .card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .step-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .step-layout {
+                grid-template-columns: 1fr 1fr;
+            }
+            .step-layout.reverse {
+                grid-template-columns: 1fr 1fr;
+            }
+            .step-layout.reverse .step-text {
+                grid-column: 2;
+                grid-row: 1;
+            }
+            .step-layout.reverse .step-image {
+                grid-column: 1;
+                grid-row: 1;
+            }
+        }
+        .step-text {
+            padding-right: 1rem;
+        }
+        .step-image img {
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            max-width: 100%;
+            height: auto;
+            display: block;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .step-image img:hover {
+            transform: scale(1.03);
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .phase-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-blue);
+        }
+        .phase-icon svg {
+            width: 2rem;
+            height: 2rem;
+            color: var(--primary-color);
+        }
+
+        /* Checklist Styles */
+        .checklist ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        @media (min-width: 640px) {
+            .checklist ul {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .checklist li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            background: var(--light-blue);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+        }
+        .checklist input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+            accent-color: var(--primary-color);
+        }
+        .checklist li.completed {
+            background: #e2f5e9;
+            color: #166534;
+            text-decoration: line-through;
+        }
+        
+        details {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: box-shadow 0.2s;
+        }
+        details:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        details > summary {
+            cursor: pointer;
+            padding: 1rem;
+            background-color: #fff;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        details > summary .arrow {
+            transition: transform 0.3s ease;
+        }
+        details[open] > summary .arrow {
+            transform: rotate(180deg);
+        }
+        .faq-content {
+            padding: 0 1rem 1rem 1rem;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .download-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            align-items: center;
+        }
+        .store-badge {
+            height: 40px;
+            transition: transform 0.2s ease;
+        }
+        .store-badge:hover {
+            transform: scale(1.05);
+        }
+
+        button {
+            background: linear-gradient(145deg, var(--primary-color), #0073c4);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 90, 158, 0.3);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 90, 158, 0.4);
+        }
+        button:disabled {
+            background: #a5b4fc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .site-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 2.5rem;
+        }
+        .footer-logo {
+            height: 3rem;
+            width: auto;
+        }
+        .footer-text {
+            text-align: right;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header class="hero-header">
+            <h1>Guía Detallada para Configurar tu Autenticación Multifactor (MFA)</h1>
+            <p style="color: rgba(255,255,255,0.9); margin-top: 0.5rem; font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto;">Este proceso añade una capa extra de seguridad a tu cuenta. Después de configurarlo, para iniciar sesión no solo necesitarás tu contraseña, sino también una aprobación desde tu teléfono móvil.</p>
+        </header>
+
+        <main>
+            
+            <div class="card checklist fade-in">
+                <h2>Tu Progreso de Configuración</h2>
+                <ul>
+                    <li><input type="checkbox" id="check1"> <label for="check1">Fase 1: Preparación y descarga</label></li>
+                    <li><input type="checkbox" id="check2"> <label for="check2">Fase 2: Configuración en PC</label></li>
+                    <li><input type="checkbox" id="check3"> <label for="check3">Fase 3: Configuración en Móvil</label></li>
+                    <li><input type="checkbox" id="check4"> <label for="check4">Fase 4: Verificación final</label></li>
+                </ul>
+            </div>
+            
+            <div class="card fade-in">
+                <div class="phase-header">
+                    <div class="phase-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311a7.5 7.5 0 00-7.5 0" /></svg>
+                    </div>
+                    <h2>Fase 1: Preparación y Descarga de la App</h2>
+                </div>
+                <div class="step-layout">
+                    <div class="step-text">
+                        <h3>Prepara tus dispositivos y descarga "Microsoft Authenticator"</h3>
+                        <p><strong>Acción:</strong> Antes de empezar, asegúrate de tener tu computadora y tu celular conectados a internet. Luego, en tu celular, descarga la aplicación gratuita <strong>"Microsoft Authenticator"</strong> desde la tienda de aplicaciones.</p>
+                        <div class="download-links">
+                            <a href="https://play.google.com/store/apps/details?id=com.azure.authenticator" target="_blank">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png" alt="Descargar de Google Play" class="store-badge">
+                            </a>
+                            <a href="https://apps.apple.com/us/app/microsoft-authenticator/id983156458" target="_blank">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/2560px-Download_on_the_App_Store_Badge.svg.png" alt="Descargar de App Store" class="store-badge">
+                            </a>
+                        </div>
+                        <p>Una vez instalada, ábrela, concede los permisos que te solicite (cámara y notificaciones son esenciales) y selecciona la opción para <strong>"Agregar una cuenta profesional o educativa"</strong> como se muestra en la imagen.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/xC0V7KbD/Pantalla-03.png" alt="Imagen de la Fase 1: Pasos iniciales en la app móvil">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in">
+                <div class="phase-header">
+                    <div class="phase-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-1.621-.87a3 3 0 01-.879-2.122v-1.007m-9 0a4.5 4.5 0 015.071-4.464M9 17.25a4.5 4.5 0 005.071-4.464M14.071 12.786a4.5 4.5 0 00-5.071 4.464" /></svg>
+                    </div>
+                    <h2>Fase 2: Configuración en tu Computadora</h2>
+                </div>
+                <div class="step-layout reverse">
+                    <div class="step-text">
+                        <h3>Agrega un nuevo método de inicio de sesión</h3>
+                        <p><strong>Acción:</strong> Ahora, en tu computadora, ve a la página de seguridad de Microsoft haciendo clic aquí: <a href="https://aka.ms/mfasetup" target="_blank">https://aka.ms/mfasetup</a></p>
+                        <p>Inicia sesión con tu correo y contraseña. Busca y haz clic en el botón <strong>"+ Agregar método de inicio de sesión"</strong>. En la ventana que aparece, selecciona la opción <strong>"Microsoft Authenticator"</strong> de la lista y haz clic en "Agregar".</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/J0Y8jG0w/Pantalla-01.png" alt="Imagen de la Fase 2: Seleccionar Microsoft Authenticator en la PC">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in">
+                 <div class="phase-header">
+                    <div class="phase-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg>
+                    </div>
+                    <h2>Fase 3: Configuración en tu Teléfono Móvil</h2>
+                </div>
+                <div class="step-layout">
+                    <div class="step-text">
+                        <h3>Escanea el Código QR</h3>
+                        <p><strong>Acción:</strong> Después del paso anterior, tu computadora mostrará un código QR en la pantalla. Ahora, toma tu celular y, dentro de la app Authenticator, elige la opción "Escanear un código QR".</p>
+                        <p>Apunta la cámara de tu celular hacia la pantalla de tu PC para escanear el código. La cuenta se vinculará automáticamente.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/RCg4kbRP/Pantalla-02.png" alt="Imagen de la Fase 3: Escanear el código QR que aparece en la PC">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in">
+                 <div class="phase-header">
+                    <div class="phase-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <h2>Fase 4: Finalización y Verificación</h2>
+                </div>
+                <div class="step-layout reverse">
+                    <div class="step-text">
+                        <h3>Realiza la Prueba de Verificación</h3>
+                        <p><strong>Acción:</strong> Para asegurarse de que todo funciona, el sistema te enviará una notificación de prueba a tu celular. Mira la pantalla de tu computadora, te mostrará un número.</p>
+                        <p>Introduce ese mismo número en la notificación de la app Authenticator en tu celular y pulsa <strong>"Sí"</strong> o <strong>"Aprobar"</strong> para confirmar.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/tC7pptv9/Pantalla-05.png" alt="Imagen de la Fase 4: Aprobar la notificación en el celular introduciendo el número">
+                    </div>
+                </div>
+                 <div class="step-layout">
+                    <div class="step-text">
+                        <h3>¡Configuración Completada!</h3>
+                        <p><strong>Confirmación:</strong> Una vez aprobada la notificación, verás el mensaje de confirmación en tu computadora. ¡Felicidades! Has activado correctamente el MFA y tu cuenta ahora es mucho más segura.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/fyRZ3xwj/Pantalla-4.png" alt="Imagen de la Fase 4: Confirmación de configuración exitosa en la PC">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in" style="border-left: 5px solid var(--accent-color); background-color: #fff5f5;">
+                <h2 style="color: #991b1b;">¿Necesitas Ayuda?</h2>
+                <p>Si encuentras algún problema durante el proceso, no dudes en contactar a la Mesa de Servicios:</p>
+                <ul style="margin-top: 0.75rem; list-style: none; padding: 0;">
+                    <li><strong>Portal de Soporte:</strong> <a href="https://mesadeservicio.suedfargesa.com:8443/" target="_blank">mesadeservicio.suedfargesa.com</a></li>
+                    <li><strong>Teléfono:</strong> (809)-682-4344 ext. 400</li>
+                </ul>
+            </div>
+        </main>
+        
+        <footer class="site-footer">
+            <div>
+                <img src="https://i.postimg.cc/T1HpWdtm/download.png" alt="Logo Sued & Fargesa" class="footer-logo">
+            </div>
+            <div class="footer-text">
+                <p>&copy; 2025 Sued & Fargesa. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Animaciones al hacer scroll ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // --- Lógica del Checklist ---
+            const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (event) => {
+                    const listItem = event.target.closest('li');
+                    if (event.target.checked) {
+                        listItem.classList.add('completed');
+                    } else {
+                        listItem.classList.remove('completed');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

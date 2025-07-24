@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Inscripción de Dispositivos Móviles - Sued & Fargesa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos Premium para un Diseño Impactante */
+        :root {
+            --primary-color: #005A9E; /* Azul corporativo oscuro */
+            --secondary-color: #0078D4; /* Azul Microsoft */
+            --accent-color: #D63028; /* Rojo corporativo */
+            --text-color: #202020;
+            --text-light: #606060;
+            --bg-color: #f4f7fc;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --border-color: #e0e5ec;
+            --shadow: 0 8px 32px rgba(0, 90, 158, 0.12);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 64rem;
+            margin: auto;
+            padding: 0 1rem;
+        }
+
+        h1, h2, h3 {
+            font-weight: 800;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+        }
+        h1 { font-size: 2.5rem; color: white; }
+        h2 { font-size: 1.75rem; }
+        h3 { font-size: 1.25rem; color: var(--secondary-color); margin-bottom: 0.5rem;}
+        p { margin-top: 0.5rem; color: var(--text-light); font-size: 1rem; }
+        a { color: var(--secondary-color); text-decoration: none; font-weight: 600; }
+        a:hover { text-decoration: underline; }
+
+        .hero-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 4rem 2rem;
+            border-radius: 0 0 40px 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: -2rem; /* To overlap with the first card */
+            z-index: 1;
+        }
+        .hero-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 30%);
+            transform: rotate(45deg);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+        .card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .step-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .step-layout {
+                grid-template-columns: 1fr 1fr;
+            }
+            .step-layout.reverse {
+                grid-template-columns: 1fr 1fr;
+            }
+            .step-layout.reverse .step-text {
+                grid-column: 2;
+                grid-row: 1;
+            }
+            .step-layout.reverse .step-image {
+                grid-column: 1;
+                grid-row: 1;
+            }
+        }
+        .step-text {
+            padding-right: 1rem;
+        }
+        .step-image img {
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            max-width: 100%;
+            height: auto;
+            display: block;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .step-image img:hover {
+            transform: scale(1.03);
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .phase-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-blue);
+        }
+        .phase-icon svg {
+            width: 2rem;
+            height: 2rem;
+            color: var(--primary-color);
+        }
+
+        /* Checklist Styles */
+        .checklist ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        @media (min-width: 640px) {
+            .checklist ul {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .checklist li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            background: var(--light-blue);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+        }
+        .checklist input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+            accent-color: var(--primary-color);
+        }
+        .checklist li.completed {
+            background: #e2f5e9;
+            color: #166534;
+            text-decoration: line-through;
+        }
+        
+        .download-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            align-items: center;
+        }
+        .store-badge {
+            height: 40px;
+            transition: transform 0.2s ease;
+        }
+        .store-badge:hover {
+            transform: scale(1.05);
+        }
+
+        .site-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 2.5rem;
+        }
+        .footer-logo {
+            height: 3rem;
+            width: auto;
+        }
+        .footer-text {
+            text-align: right;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header class="hero-header">
+            <h1>Guía de Inscripción de Dispositivos Móviles</h1>
+            <p style="color: rgba(255,255,255,0.9); margin-top: 0.5rem; font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto;">Sigue estos pasos para registrar tu dispositivo móvil (Android o iPhone) y acceder de forma segura a los recursos de la empresa.</p>
+        </header>
+
+        <main>
+            
+            <!-- SECCIÓN PARA ANDROID -->
+            <div class="card fade-in">
+                <div class="phase-header">
+                    <div class="phase-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 18a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v10zM12 6V4M8 4h8"/></svg>
+                    </div>
+                    <h2>Fase de Inscripción para Android</h2>
+                </div>
+
+                <div class="step-layout">
+                    <div class="step-text">
+                        <h3>Paso 1: Descarga e Inicia Sesión en "Portal de Empresa"</h3>
+                        <p><strong>Acción:</strong> Primero, descarga la aplicación <strong>"Portal de Empresa de Intune"</strong> desde la Google Play Store. Una vez instalada, ábrela e inicia sesión con tu correo electrónico y contraseña de la empresa.</p>
+                        <div class="download-links">
+                             <a href="https://play.google.com/store/apps/details?id=com.microsoft.windowsintune.companyportal" target="_blank">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png" alt="Descargar de Google Play" class="store-badge">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/VLhSMcxJ/Intune-A-01.png" alt="Iniciar sesión en el Portal de Empresa">
+                    </div>
+                </div>
+
+                 <div class="step-layout reverse">
+                    <div class="step-text">
+                        <h3>Paso 2: Inicia la Configuración de Acceso</h3>
+                        <p><strong>Acción:</strong> Después de iniciar sesión, la app te mostrará la pantalla de "Configuración de acceso de la empresa". Este es el punto de partida para inscribir tu dispositivo. Presiona <strong>"Comenzar"</strong> para continuar.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/DZcJb4hh/Intune-A-02.png" alt="Pantalla de configuración de acceso">
+                    </div>
+                </div>
+
+                <div class="step-layout">
+                    <div class="step-text">
+                        <h3>Paso 3: Creación del Perfil de Trabajo</h3>
+                        <p><strong>Acción:</strong> El sistema ahora se está preparando para la inscripción y comenzará a crear un "perfil de trabajo". Este proceso es automático y separa tus datos laborales de los personales, garantizando tu privacidad. Espera a que finalice.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/CKkfS66z/Intune-A-03.png" alt="Creación del perfil de trabajo en progreso">
+                    </div>
+                </div>
+
+                <div class="step-layout reverse">
+                    <div class="step-text">
+                        <h3>Paso 4: Activación y Registro del Dispositivo</h3>
+                        <p><strong>Acción:</strong> En esta fase, la aplicación está activando el perfil de trabajo y registrando tu dispositivo en el sistema de la empresa. Este paso asegura que tu equipo cumple con las políticas de seguridad necesarias. El proceso es automático.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/qqbN1fgZ/Intune-A-04.png" alt="Activando el perfil de trabajo y registrando el dispositivo">
+                    </div>
+                </div>
+
+                <div class="step-layout">
+                    <div class="step-text">
+                        <h3>Paso 5: ¡Configuración Completada!</h3>
+                        <p><strong>Acción:</strong> ¡Lo has logrado! Al ver esta pantalla, tu dispositivo ha sido inscrito correctamente. Presiona <strong>"Listo"</strong> para finalizar el proceso.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/8ktfpvwB/Intune-A-05.png" alt="Confirmación de la inscripción exitosa">
+                    </div>
+                </div>
+
+                <div class="step-layout reverse">
+                    <div class="step-text">
+                        <h3>Paso 6: Accede a tus Aplicaciones de Trabajo</h3>
+                        <p><strong>Resultado:</strong> Ahora, en el menú de aplicaciones de tu teléfono, verás dos pestañas: "Personal" y "Trabajo". La pestaña "Trabajo" contendrá todas las aplicaciones corporativas, identificadas con un pequeño maletín, manteniéndolas seguras y separadas de tus apps personales.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/MG2vPmKx/Intune-A-06.png" alt="Pestañas de perfil personal y de trabajo en el menú de apps">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN PARA IPHONE -->
+            <div class="card fade-in">
+                <div class="phase-header">
+                    <div class="phase-icon">
+                        <!-- Ícono de Apple -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg>
+                    </div>
+                    <h2>Fase de Inscripción para iPhone</h2>
+                </div>
+                <div class="step-layout">
+                    <div class="step-text">
+                        <h3>Paso 1: Descarga e Inicia Sesión</h3>
+                        <p><strong>Acción:</strong> Descarga la app <strong>"Portal de Empresa de Intune"</strong> desde la App Store. Ábrela e inicia sesión con tu correo y contraseña de la empresa.</p>
+                         <div class="download-links">
+                             <a href="https://apps.apple.com/us/app/intune-company-portal/id719171358" target="_blank">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/2560px-Download_on_the_App_Store_Badge.svg.png" alt="Descargar de App Store" class="store-badge">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/8zr7m0Gt/Intune-Apple-01.png" alt="Iniciar sesión en Portal de Empresa en iPhone">
+                    </div>
+                </div>
+                 <div class="step-layout reverse">
+                    <div class="step-text">
+                        <h3>Paso 2: Comienza la Configuración</h3>
+                        <p><strong>Acción:</strong> En la pantalla de "Configuración de acceso de la empresa", presiona <strong>"Comenzar"</strong> para iniciar el proceso de inscripción.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/7hWLggQF/Intune-Apple-02.png" alt="Comenzar configuración de acceso">
+                    </div>
+                </div>
+                <div class="step-layout">
+                    <div class="step-text">
+                        <h3>Paso 3: Descarga el Perfil de Administración</h3>
+                        <p><strong>Acción:</strong> La app te pedirá descargar un perfil de configuración. Presiona <strong>"Permitir"</strong> para que el perfil se descargue en tu dispositivo.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/ZY70tSKw/Intune-Apple-04.png" alt="Descargar perfil de administración">
+                    </div>
+                </div>
+                <div class="step-layout reverse">
+                    <div class="step-text">
+                        <h3>Paso 4: Instala el Perfil Descargado</h3>
+                        <p><strong>Acción:</strong> Ve a <strong>"Configuración"</strong> en tu iPhone. Verás una nueva opción llamada <strong>"Perfil descargado"</strong> en la parte superior. Púlsala.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/02zj9BzP/Intune-Apple-05.png" alt="Acceder a perfil descargado en Configuración">
+                    </div>
+                </div>
+                <div class="step-layout">
+                    <div class="step-text">
+                        <h3>Paso 5: Confirma la Instalación</h3>
+                        <p><strong>Acción:</strong> Pulsa <strong>"Instalar"</strong> en la esquina superior derecha. Se te pedirá tu código de desbloqueo del iPhone. Luego, vuelve a pulsar <strong>"Instalar"</strong> para confirmar.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/nh7LD9KW/Intune-Apple-06.png" alt="Instalar perfil y confirmar">
+                    </div>
+                </div>
+                <div class="step-layout reverse">
+                    <div class="step-text">
+                        <h3>Paso 6: Confía en la Administración Remota</h3>
+                        <p><strong>Acción:</strong> Aparecerá una advertencia sobre la administración remota. Pulsa <strong>"Confiar"</strong> para permitir que la empresa administre las aplicaciones y configuraciones de trabajo en tu dispositivo.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/W39pvGjd/Intune-Apple-08.png" alt="Confiar en la administración remota">
+                    </div>
+                </div>
+                <div class="step-layout">
+                    <div class="step-text">
+                        <h3>Paso 7: ¡Inscripción Completa!</h3>
+                        <p><strong>Resultado:</strong> Una vez instalado el perfil, verás la confirmación. Vuelve a la app "Portal de Empresa" y verás que todos los pasos están completados. ¡Tu iPhone está inscrito!</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/jjtRngSW/Intune-Apple-10.png" alt="Confirmación final en la app">
+                    </div>
+                </div>
+                 <div class="step-layout reverse">
+                    <div class="step-text">
+                        <h3>Paso 8: Accede a tus Apps Corporativas</h3>
+                        <p><strong>Resultado:</strong> El sistema instalará automáticamente las aplicaciones de la empresa, como Outlook y Teams. Las encontrarás en la pantalla de inicio de tu iPhone.</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="https://i.postimg.cc/GtVcBb4r/Intune-Apple-11.jpg" alt="Apps corporativas instaladas">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in" style="border-left: 5px solid var(--accent-color); background-color: #fff5f5;">
+                <h2 style="color: #991b1b;">¿Necesitas Ayuda?</h2>
+                <p>Si encuentras algún problema durante el proceso, no dudes en contactar a la Mesa de Servicios:</p>
+                <ul style="margin-top: 0.75rem; list-style: none; padding: 0;">
+                    <li><strong>Portal de Soporte:</strong> <a href="https://mesadeservicio.suedfargesa.com:8443/" target="_blank">mesadeservicio.suedfargesa.com</a></li>
+                    <li><strong>Teléfono:</strong> (809)-682-4344 ext. 400</li>
+                </ul>
+            </div>
+        </main>
+        
+        <footer class="site-footer">
+            <div>
+                <img src="https://i.postimg.cc/T1HpWdtm/download.png" alt="Logo Sued & Fargesa" class="footer-logo">
+            </div>
+            <div class="footer-text">
+                <p>&copy; 2025 Sued & Fargesa. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Animaciones al hacer scroll ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // --- Lógica del Checklist ---
+            const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (event) => {
+                    const listItem = event.target.closest('li');
+                    if (event.target.checked) {
+                        listItem.classList.add('completed');
+                    } else {
+                        listItem.classList.remove('completed');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

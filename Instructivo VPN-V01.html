@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Configuración de VPN Corporativa - Sued & Fargesa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos Premium para un Diseño Impactante */
+        :root {
+            --primary-color: #005A9E; /* Azul corporativo oscuro */
+            --secondary-color: #0078D4; /* Azul Microsoft */
+            --accent-color: #D63028; /* Rojo corporativo */
+            --text-color: #202020;
+            --text-light: #606060;
+            --bg-color: #f4f7fc;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --border-color: #e0e5ec;
+            --shadow: 0 8px 32px rgba(0, 90, 158, 0.12);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 64rem;
+            margin: auto;
+            padding: 0 1rem;
+        }
+
+        h1, h2, h3 {
+            font-weight: 800;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+        }
+        h1 { font-size: 2.5rem; color: white; }
+        h2 { font-size: 1.75rem; }
+        h3 { font-size: 1.25rem; color: var(--secondary-color); margin-bottom: 0.5rem;}
+        p { margin-top: 0.5rem; color: var(--text-light); font-size: 1rem; }
+        a { color: var(--secondary-color); text-decoration: none; font-weight: 600; }
+        a:hover { text-decoration: underline; }
+
+        .hero-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 4rem 2rem;
+            border-radius: 0 0 40px 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: -2rem; /* To overlap with the first card */
+            z-index: 1;
+        }
+        .hero-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 30%);
+            transform: rotate(45deg);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+        .card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .step-image img {
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            width: 100%;
+            height: auto;
+            display: block;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .phase-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-blue);
+        }
+        .phase-icon svg {
+            width: 2rem;
+            height: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .download-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            align-items: center;
+        }
+        .store-badge {
+            height: 40px;
+            transition: transform 0.2s ease;
+        }
+        .store-badge:hover {
+            transform: scale(1.05);
+        }
+
+        .site-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 2.5rem;
+        }
+        .footer-logo {
+            height: 3rem;
+            width: auto;
+        }
+        .footer-text {
+            text-align: right;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header class="hero-header">
+            <h1>Guía de Configuración de VPN Corporativa (Android)</h1>
+            <p style="color: rgba(255,255,255,0.9); margin-top: 0.5rem; font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto;">Este instructivo te guiará para configurar la conexión a la red privada (VPN) de la empresa en tu dispositivo Android de forma segura.</p>
+        </header>
+
+        <main>
+            
+            <div class="card fade-in">
+                <div class="phase-header">
+                    <div class="phase-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>
+                    </div>
+                    <h2>Fase 1: Configuración del Perfil</h2>
+                </div>
+                <div class="step-text">
+                    <h3>Pasos 1-6: Descarga, Creación y Configuración del Perfil</h3>
+                    <p><strong>Acción:</strong> Sigue los pasos numerados en la imagen. Primero, descarga y abre la app <strong>"strongSwan VPN Client"</strong>. Luego, añade un nuevo perfil y rellena los datos de conexión (servidor, credenciales) y selecciona el certificado de seguridad correcto, tal como se indica.</p>
+                    <div class="download-links">
+                         <a href="https://play.google.com/store/apps/details?id=org.strongswan.android" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png" alt="Descargar de Google Play" class="store-badge">
+                        </a>
+                    </div>
+                </div>
+                <div class="step-image">
+                    <img src="https://i.postimg.cc/brPmPB0T/Screenshot-2025-07-24-110045.png" alt="Pasos del 1 al 6 para la configuración del perfil VPN">
+                </div>
+            </div>
+
+            <div class="card fade-in">
+                 <div class="phase-header">
+                    <div class="phase-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <h2>Fase 2: Conexión y Verificación</h2>
+                </div>
+                <div class="step-text">
+                    <h3>Pasos 7-9: Guardado, Autorización y Conexión Final</h3>
+                    <p><strong>Acción:</strong> Una vez configurado el perfil, guárdalo (Paso 7). A continuación, autoriza todos los permisos que la aplicación te solicite para poder gestionar la conexión (Paso 8). Finalmente, el estado cambiará a "Connected", confirmando que la configuración ha sido exitosa (Paso 9).</p>
+                </div>
+                <div class="step-image">
+                    <img src="https://i.postimg.cc/TwgtZ6b1/Screenshot-2.png" alt="Pasos del 7 al 9 para guardar y conectar la VPN">
+                </div>
+            </div>
+
+            <div class="card fade-in" style="border-left: 5px solid var(--accent-color); background-color: #fff5f5;">
+                <h2 style="color: #991b1b;">¿Necesitas Ayuda?</h2>
+                <p>Si encuentras algún problema durante el proceso, no dudes en contactar a la Mesa de Servicios:</p>
+                <ul style="margin-top: 0.75rem; list-style: none; padding: 0;">
+                    <li><strong>Portal de Soporte:</strong> <a href="https://mesadeservicio.suedfargesa.com:8443/" target="_blank">mesadeservicio.suedfargesa.com</a></li>
+                    <li><strong>Teléfono:</strong> (809)-682-4344 ext. 400</li>
+                </ul>
+            </div>
+        </main>
+        
+        <footer class="site-footer">
+            <div>
+                <img src="https://i.postimg.cc/T1HpWdtm/download.png" alt="Logo Sued & Fargesa" class="footer-logo">
+            </div>
+            <div class="footer-text">
+                <p>&copy; 2025 Sued & Fargesa. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Animaciones al hacer scroll ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+
+</body>
+</html>
