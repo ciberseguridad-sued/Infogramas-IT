@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Configuración de MFA - Sued & Fargesa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] summary .arrow-down {
+            transform: rotate(180deg);
+        }
+        .store-badge {
+            height: 40px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl">
+        
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <img src="https://i.postimg.cc/KvTQpTwQ/descarga.png" alt="Logo Sued & Fargesa" class="mx-auto h-20 w-auto mb-4">
+            <h1 class="text-3xl font-bold text-gray-800">Guía de Instalación y Configuración de MFA</h1>
+            <p class="text-md text-gray-600 mt-2">Protege tu cuenta con la Autenticación Multifactor</p>
+        </header>
+
+        <main class="space-y-6">
+
+            <!-- 1. Introducción -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-800">¿Qué es el MFA y por qué es importante?</h2>
+                    </div>
+                </div>
+                <div class="mt-4 text-gray-700 space-y-3">
+                    <p>La <strong>Autenticación Multifactor (MFA)</strong> es una capa de seguridad adicional para proteger tu cuenta. Es como usar dos llaves en lugar de una para abrir una puerta.</p>
+                    <p>Además de tu contraseña (la primera llave), el MFA te pedirá una segunda verificación desde tu celular (la segunda llave). Esto asegura que, aunque alguien descubra tu contraseña, no podrá acceder a tu cuenta sin tu teléfono.</p>
+                    <p class="font-semibold text-blue-700">Activar el MFA es crucial para proteger tu información y la de la empresa contra accesos no autorizados.</p>
+                </div>
+            </div>
+
+            <!-- 2. Requisitos Previos -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-green-100 p-3 rounded-full">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-800">Requisitos Previos</h2>
+                    </div>
+                </div>
+                <ul class="mt-4 space-y-3">
+                    <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Tu celular (Smartphone) personal o corporativo.</li>
+                    <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Conexión a Internet estable en tu celular y computadora.</li>
+                    <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Acceso a tu computadora y a tu correo electrónico de la empresa.</li>
+                </ul>
+            </div>
+            
+            <!-- 3. Pasos de Instalación y Configuración -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-indigo-100 p-3 rounded-full">
+                       <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-800">Pasos de Instalación y Configuración</h2>
+                    </div>
+                </div>
+                <div class="mt-4 space-y-8">
+                    <!-- Paso 1 -->
+                    <div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                        <div class="flex-shrink-0 w-12 h-12 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold text-xl">1</div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-lg text-gray-800">Descarga la App "Microsoft Authenticator"</h3>
+                            <p class="text-gray-600 mt-1">En tu celular, busca y descarga la aplicación desde la tienda oficial.</p>
+                            <div class="flex items-center space-x-4 mt-3">
+                                <a href="https://play.google.com/store/apps/details?id=com.azure.authenticator" target="_blank">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png" alt="Descargar en Google Play" class="store-badge">
+                                </a>
+                                <a href="https://apps.apple.com/us/app/microsoft-authenticator/id983156458" target="_blank">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/2560px-Download_on_the_App_Store_Badge.svg.png" alt="Descargar en App Store" class="store-badge">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paso 2 -->
+                    <div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                        <div class="flex-shrink-0 w-12 h-12 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold text-xl">2</div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-lg text-gray-800">Inicia la configuración en tu computadora</h3>
+                            <p class="text-gray-600 mt-1">En tu computadora, abre un navegador y ve a: <a href="https://aka.ms/mfasetup" target="_blank" class="text-indigo-600 font-medium hover:underline break-all">https://aka.ms/mfasetup</a></p>
+                            <p class="text-gray-600 mt-2">Inicia sesión con tu correo y contraseña. Luego, haz clic en <strong>"Agregar método de inicio de sesión"</strong>.</p>
+                            <img src="https://i.postimg.cc/446xjGWz/Pantalla-01.png" alt="Pantalla para agregar un método de inicio de sesión" class="mt-3 rounded-lg border" onerror="this.onerror=null;this.src='https://placehold.co/600x200/E9E9E9/333333?text=Imagen+Agregar+Método';">
+                            <p class="text-gray-600 mt-4">En la siguiente ventana, elige <strong>"Aplicación de autenticación"</strong> en el menú desplegable y haz clic en "Agregar".</p>
+                            <p class="text-gray-600 mt-2">Se mostrará una pantalla con el <strong>código QR</strong> que debes escanear.</p>
+                            <img src="https://i.postimg.cc/sx4fWPMn/Pantalla-02.png" alt="Pantalla con el código QR para escanear" class="mt-3 rounded-lg border" onerror="this.onerror=null;this.src='https://placehold.co/400x250/E9E9E9/333333?text=Imagen+Código+QR';">
+                        </div>
+                    </div>
+
+                    <!-- Paso 3 -->
+                    <div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                        <div class="flex-shrink-0 w-12 h-12 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold text-xl">3</div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-lg text-gray-800">Agrega tu cuenta en la App del celular</h3>
+                            <p class="text-gray-600 mt-1">Abre la app <strong>Microsoft Authenticator</strong> en tu celular.</p>
+                            <ul class="list-disc list-inside mt-2 text-gray-600 space-y-1">
+                                <li>Toca el ícono <strong>'+'</strong> para agregar una cuenta.</li>
+                                <li>Selecciona <strong>"Cuenta profesional o educativa"</strong>.</li>
+                                <li>Selecciona <strong>"Escanear un código QR"</strong>.</li>
+                            </ul>
+                            <img src="https://www.rockhurst.edu/sites/default/files/2023-01/mfa-3.png" alt="Pantalla de la app Authenticator para agregar cuenta" class="mt-3 rounded-lg border max-w-xs" onerror="this.onerror=null;this.src='https://placehold.co/250x450/E9E9E9/333333?text=App+Authenticator';">
+                        </div>
+                    </div>
+                    
+                    <!-- Paso 4 -->
+                    <div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                        <div class="flex-shrink-0 w-12 h-12 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold text-xl">4</div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-lg text-gray-800">Escanea el código QR y valida</h3>
+                            <p class="text-gray-600 mt-1">Apunta la cámara de tu celular a la pantalla de tu computadora para escanear el código QR. Una vez escaneado, tu cuenta se agregará a la app.</p>
+                            <p class="text-gray-600 mt-2">El sistema te enviará una notificación de prueba a tu celular. <strong>Aprueba la notificación</strong> para finalizar el proceso.</p>
+                             <img src="https://support.lasuper.com.au/hc/article_attachments/9536846995993" alt="Ejemplo de notificación de aprobación en el celular" class="mt-3 rounded-lg border max-w-xs" onerror="this.onerror=null;this.src='https://placehold.co/250x150/E9E9E9/333333?text=Notificación+de+Aprobación';">
+                        </div>
+                    </div>
+
+                    <!-- Paso 5 -->
+                     <div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                        <div class="flex-shrink-0 w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center font-bold text-xl">✓</div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-lg text-gray-800">¡Listo! Tu cuenta está protegida</h3>
+                            <p class="text-gray-600 mt-1">¡Felicidades! Has activado correctamente el MFA. A partir de ahora, cuando inicies sesión, recibirás una notificación en tu celular para aprobar el acceso.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Preguntas Frecuentes y Errores Comunes -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                 <div class="flex items-center space-x-4">
+                    <div class="bg-yellow-100 p-3 rounded-full">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-800">Preguntas Frecuentes y Errores Comunes</h2>
+                    </div>
+                </div>
+                <div class="mt-4 space-y-3">
+                    <details class="group">
+                        <summary class="flex justify-between items-center cursor-pointer p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <span class="font-medium text-gray-800">¿Qué hago si no recibo la notificación en mi celular?</span>
+                            <svg class="w-5 h-5 text-gray-500 transition-transform transform arrow-down" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="p-3 text-gray-600">
+                            Abre la app Microsoft Authenticator manualmente en tu celular. A veces las notificaciones se retrasan. Si aún no aparece, puedes tocar la opción "Usar un código de verificación" en la pantalla de inicio de sesión de tu computadora e introducir el código de 6 dígitos que aparece en la app.
+                        </div>
+                    </details>
+                    <details class="group">
+                        <summary class="flex justify-between items-center cursor-pointer p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <span class="font-medium text-gray-800">¿Qué pasa si cambio o pierdo mi celular?</span>
+                            <svg class="w-5 h-5 text-gray-500 transition-transform transform arrow-down" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="p-3 text-gray-600">
+                            Es muy importante que contactes al departamento de Soporte Técnico <strong>antes</strong> de cambiar tu dispositivo para que podamos transferir la configuración. Si lo perdiste o te lo robaron, contacta a soporte inmediatamente para que puedan deshabilitar el MFA de ese dispositivo y ayudarte a configurarlo en uno nuevo.
+                        </div>
+                    </details>
+                     <details class="group">
+                        <summary class="flex justify-between items-center cursor-pointer p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <span class="font-medium text-gray-800">El código QR no funciona o no se escanea.</span>
+                            <svg class="w-5 h-5 text-gray-500 transition-transform transform arrow-down" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="p-3 text-gray-600">
+                           Asegúrate de que la pantalla de tu computadora tenga suficiente brillo y no haya reflejos. Limpia la lente de la cámara de tu celular. Si sigue sin funcionar, en la página del código QR en tu computadora, busca una opción para "configurar la cuenta manualmente" y sigue las instrucciones para introducir un código y una URL en la app.
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <!-- 5. Contacto de Soporte -->
+            <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-red-100 p-3 rounded-full">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-800">¿Necesitas Ayuda?</h2>
+                    </div>
+                </div>
+                <div class="mt-4 text-gray-700">
+                    <p>Si encuentras algún problema durante el proceso o tienes alguna duda, no dudes en contactar al equipo de Soporte Técnico:</p>
+                    <ul class="mt-3 space-y-2">
+                        <li><strong>Correo:</strong> <a href="mailto:soporte.ti@suedfargesa.com" class="text-indigo-600 font-medium">soporte.ti@suedfargesa.com</a></li>
+                        <li><strong>Extensión:</strong> 1234</li>
+                    </ul>
+                </div>
+            </div>
+
+        </main>
+        
+        <!-- Footer -->
+        <footer class="text-center mt-10 text-sm text-gray-500">
+            <p>&copy; 2024 Sued & Fargesa. Todos los derechos reservados.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
