@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist Avanzado: Reparación de Inscripción MDM/Intune</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .checklist-item.completed > label .step-title {
+            text-decoration: line-through;
+            color: #94a3b8; /* slate-400 */
+        }
+        .code-block {
+            background-color: #1e293b; /* slate-800 */
+            color: #e2e8f0; /* slate-200 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 0.75rem;
+            position: relative;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+            text-align: center; /* Código centrado según solicitud */
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: #475569; /* slate-600 */
+            color: white;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: background-color 0.2s;
+        }
+        .copy-btn:hover {
+            background-color: #334155; /* slate-700 */
+        }
+        .info-box {
+            background-color: #eef2ff; /* indigo-50 */
+            border-left: 4px solid #4f46e5; /* indigo-600 */
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.25rem;
+        }
+        .warning-box {
+            background-color: #fffbeb; /* amber-50 */
+            border-left: 4px solid #f59e0b; /* amber-500 */
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.25rem;
+        }
+        .accordion-header {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-item.open .accordion-content {
+            max-height: 2000px; /* Adjust as needed */
+        }
+        .accordion-item.open .accordion-arrow {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+        
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-bold text-slate-900">Checklist Avanzado de Reparación MDM/Intune</h1>
+            <p class="text-slate-600 mt-2 text-lg">Guía exhaustiva para diagnosticar y resolver fallos de inscripción en dispositivos Hybrid Joined.</p>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="mb-8 bg-white p-6 rounded-2xl shadow-lg">
+            <div class="flex justify-between mb-2">
+                <span class="text-lg font-semibold text-blue-700">Progreso General</span>
+                <span class="text-lg font-semibold text-blue-700" id="progress-text">0%</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-3.5">
+                <div id="progress-bar" class="bg-blue-600 h-3.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+        </div>
+        
+        <div id="accordion-container" class="space-y-4">
+            <!-- Section 1: Initial Validation -->
+            <div class="accordion-item bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="accordion-header flex justify-between items-center p-6 hover:bg-slate-50">
+                    <h2 class="text-2xl font-bold text-slate-800"><i class="fas fa-search text-blue-500 mr-3"></i>Sección 1: Validación y Diagnóstico</h2>
+                    <i class="fas fa-chevron-down accordion-arrow transition-transform"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6 space-y-6">
+                        <!-- Step 1.1 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step1" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step1" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">1.1. Validar estado en Microsoft Entra ID</div>
+                                <p class="text-slate-600 mt-1">Confirma el estado base del dispositivo. Ve a <code class="text-sm bg-slate-100 p-1 rounded">entra.microsoft.com > Devices</code>.</p>
+                                <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1 pl-4">
+                                    <li><strong>Join type:</strong> Debe ser <code class="text-sm">Microsoft Entra hybrid joined</code></li>
+                                    <li><strong>MDM:</strong> Debe ser <code class="text-sm">None</code> (este es el problema a resolver)</li>
+                                    <li><strong>Owner:</strong> Probablemente <code class="text-sm">None</code> o vacío</li>
+                                </ul>
+                            </label>
+                        </div>
+                        <!-- Step 1.2 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step2" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step2" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">1.2. Validar inscripción automática en Intune</div>
+                                <p class="text-slate-600 mt-1">Asegúrate de que la inscripción esté habilitada para el usuario. Ve a <code class="text-sm bg-slate-100 p-1 rounded">Intune Admin Center > Devices > Enroll devices > Automatic Enrollment</code>.</p>
+                                <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1 pl-4">
+                                    <li><strong>MDM user scope:</strong> Debe ser <code class="text-sm">All</code> o un grupo que incluya al usuario afectado.</li>
+                                </ul>
+                            </label>
+                        </div>
+                        <!-- Step 1.3 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step3" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step3" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">1.3. Verificar licencia del usuario</div>
+                                <p class="text-slate-600 mt-1">La inscripción falla si el usuario no tiene licencia. Confirma en <code class="text-sm bg-slate-100 p-1 rounded">M365 admin center</code> que el usuario tiene una licencia válida (ej. M365 E3/E5, Intune Plan 1).</p>
+                            </label>
+                        </div>
+                         <!-- Step 1.4 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step4" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step4" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">1.4. Verificar estado local con <code class="text-lg">dsregcmd</code></div>
+                                <p class="text-slate-600 mt-1">Este comando es clave para el diagnóstico local. Ejecútalo en PowerShell.</p>
+                                <div class="code-block">
+                                    <button class="copy-btn">Copiar</button>
+                                    <code>dsregcmd /status</code>
+                                </div>
+                                <p class="text-slate-600 mt-2">Valida lo siguiente en la salida:</p>
+                                <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1 pl-4">
+                                    <li><strong>AzureAdJoined:</strong> YES</li>
+                                    <li><strong>DomainJoined:</strong> YES</li>
+                                    <li><strong>AzureAdPrt:</strong> YES (¡Muy importante! Indica que el token de autenticación está presente)</li>
+                                    <li><strong>MdmUrl:</strong> No debe estar vacío. Si lo está, es un síntoma claro del problema.</li>
+                                </ul>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 2: Sync and Connectivity -->
+            <div class="accordion-item bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="accordion-header flex justify-between items-center p-6 hover:bg-slate-50">
+                    <h2 class="text-2xl font-bold text-slate-800"><i class="fas fa-sync-alt text-green-500 mr-3"></i>Sección 2: Sincronización y Conectividad</h2>
+                    <i class="fas fa-chevron-down accordion-arrow transition-transform"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6 space-y-6">
+                        <!-- Step 2.1 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step5" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step5" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">2.1. Iniciar sesión con usuario licenciado</div>
+                                <p class="text-slate-600 mt-1">La inscripción se desencadena con el inicio de sesión del usuario. Cierra sesión de otros usuarios e inicia sesión de forma interactiva (no RDP) con la cuenta licenciada. Espera 2-5 minutos con conexión a Internet.</p>
+                            </label>
+                        </div>
+                        <!-- Step 2.2 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step6" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step6" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">2.2. Verificar conectividad a endpoints</div>
+                                <p class="text-slate-600 mt-1">Confirma que no hay un firewall o proxy bloqueando el acceso a los servicios de Microsoft.</p>
+                                <div class="code-block">
+                                    <button class="copy-btn">Copiar</button>
+                                    <code>Test-NetConnection autologon.microsoftazuread-sso.com -Port 443</code>
+                                </div>
+                                <p class="text-slate-600 mt-2">El resultado debe ser <code class="text-sm bg-slate-100 p-1 rounded">TcpTestSucceeded : True</code>.</p>
+                            </label>
+                        </div>
+                         <!-- Step 2.3 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step7" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step7" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">2.3. Revisar logs en el Visor de Eventos</div>
+                                <p class="text-slate-600 mt-1">Los errores de inscripción se registran aquí. Abre el Visor de Eventos y navega a:</p>
+                                <p class="text-slate-600 mt-2 font-mono text-sm bg-slate-100 p-2 rounded">Applications and Services Logs > Microsoft > Windows > DeviceManagement-Enterprise-Diagnostics-Provider > Admin</p>
+                                <p class="text-slate-600 mt-2">Busca errores o advertencias recientes, especialmente después de un intento de inicio de sesión. Errores como "Auto MDM Enroll: Failed" son la clave.</p>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 3: Forced Re-enrollment -->
+            <div class="accordion-item bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="accordion-header flex justify-between items-center p-6 hover:bg-slate-50">
+                    <h2 class="text-2xl font-bold text-slate-800"><i class="fas fa-wrench text-orange-500 mr-3"></i>Sección 3: Reinscripción Forzada</h2>
+                    <i class="fas fa-chevron-down accordion-arrow transition-transform"></i>
+                </div>
+                <div class="accordion-content">
+                     <div class="px-6 pb-6 space-y-6">
+                        <!-- Step 3.1 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step8" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step8" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">3.1. Intentar inscripción manual inicial</div>
+                                <p class="text-slate-600 mt-1">A veces, un empujón manual es suficiente.</p>
+                                <div class="code-block">
+                                    <button class="copy-btn">Copiar</button>
+                                    <code>& "$env:WINDIR\system32\deviceenroller.exe" /c /AutoEnrollMDM</code>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Step 3.2 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step9" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step9" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">3.2. Eliminar inscripción MDM corrupta (reseteo forzado)</div>
+                                <div class="warning-box">
+                                    <p class="text-amber-800"><i class="fas fa-exclamation-triangle mr-2"></i><strong>Atención:</strong> Ejecuta estos comandos en PowerShell como administrador. Esto elimina las claves de registro de MDM y las carpetas locales. Es seguro para los datos del usuario, pero es un paso drástico.</p>
+                                </div>
+                                <div class="code-block">
+                                    <button class="copy-btn">Copiar</button>
+                                    <code>Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Enrollments" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Enrollments\Status" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -Path "$env:ProgramData\Microsoft\DeviceManagement" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -Path "$env:LOCALAPPDATA\Microsoft\MDM" -Recurse -Force -ErrorAction SilentlyContinue</code>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Step 3.3 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step10" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step10" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">3.3. Reiniciar el equipo</div>
+                                <p class="text-slate-600 mt-1">Un reinicio es crucial después de la limpieza para asegurar que todos los servicios se recarguen correctamente.</p>
+                                <div class="code-block">
+                                    <button class="copy-btn">Copiar</button>
+                                    <code>shutdown /r /t 5</code>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Step 3.4 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step11" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step11" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">3.4. Iniciar sesión y forzar inscripción nuevamente</div>
+                                <p class="text-slate-600 mt-1">Después de reiniciar, inicia sesión con el usuario licenciado, espera un par de minutos y ejecuta el comando de inscripción manual otra vez.</p>
+                                <div class="code-block">
+                                    <button class="copy-btn">Copiar</button>
+                                    <code>& "$env:WINDIR\system32\deviceenroller.exe" /c /AutoEnrollMDM</code>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Final Verification -->
+            <div class="accordion-item bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="accordion-header flex justify-between items-center p-6 hover:bg-slate-50">
+                    <h2 class="text-2xl font-bold text-slate-800"><i class="fas fa-check-circle text-purple-500 mr-3"></i>Sección 4: Verificación Final</h2>
+                    <i class="fas fa-chevron-down accordion-arrow transition-transform"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6 space-y-6">
+                        <!-- Step 4.1 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step12" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step12" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">4.1. Validar instalación y estado del agente de Intune</div>
+                                <p class="text-slate-600 mt-1">El servicio "Intune Management Extension" es responsable de ejecutar scripts y aplicaciones. Debe estar instalado y en ejecución.</p>
+                                <div class="code-block">
+                                    <button class="copy-btn">Copiar</button>
+                                    <code>Get-Service -Name "IntuneManagementExtension"</code>
+                                </div>
+                                <p class="text-slate-600 mt-2">El estado debe ser <code class="text-sm bg-slate-100 p-1 rounded">Running</code>.</p>
+                            </label>
+                        </div>
+                        <!-- Step 4.2 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step13" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step13" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">4.2. Verificar actualización en Entra ID</div>
+                                <p class="text-slate-600 mt-1">Vuelve a <code class="text-sm bg-slate-100 p-1 rounded">entra.microsoft.com</code>. Los campos deberían haberse actualizado:</p>
+                                <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1 pl-4">
+                                    <li><strong>Owner:</strong> Ahora debe mostrar el UPN del usuario.</li>
+                                    <li><strong>MDM:</strong> Debe mostrar <code class="text-sm">Microsoft Intune</code>.</li>
+                                </ul>
+                            </label>
+                        </div>
+                         <!-- Step 4.3 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step14" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step14" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">4.3. Confirmar aparición en Intune Admin Center</div>
+                                <p class="text-slate-600 mt-1">El paso final: el dispositivo debe aparecer en <code class="text-sm bg-slate-100 p-1 rounded">Intune Admin Center > Devices > Windows</code>. Puede tardar unos minutos en sincronizarse.</p>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Advanced Troubleshooting -->
+            <div class="accordion-item bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="accordion-header flex justify-between items-center p-6 hover:bg-slate-50">
+                    <h2 class="text-2xl font-bold text-slate-800"><i class="fas fa-microchip text-red-500 mr-3"></i>Sección 5: Pasos Avanzados</h2>
+                    <i class="fas fa-chevron-down accordion-arrow transition-transform"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6 space-y-6">
+                        <!-- Step 5.1 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step15" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step15" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">5.1. Instalar agente de Intune manualmente</div>
+                                <p class="text-slate-600 mt-1">Si el servicio "Intune Management Extension" no aparece, puedes instalarlo manualmente.</p>
+                                <div class="code-block">
+                                    <button class="copy-btn">Copiar</button>
+                                    <code>Invoke-WebRequest -Uri "https://aka.ms/intunemanagementextensionmsi" -OutFile "$env:TEMP\IntuneManagementExtension.msi"
+Start-Process msiexec.exe -ArgumentList "/i `"$env:TEMP\IntuneManagementExtension.msi`" /qn" -Wait</code>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Step 5.2 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step16" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step16" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">5.2. Revisar Políticas de Acceso Condicional</div>
+                                <p class="text-slate-600 mt-1">Una política de Acceso Condicional mal configurada puede bloquear la inscripción. Revisa en <code class="text-sm bg-slate-100 p-1 rounded">Entra ID > Protection > Conditional Access</code> si alguna política podría estar bloqueando el registro de dispositivos o requiriendo un estado de cumplimiento que el dispositivo aún no puede tener.</p>
+                            </label>
+                        </div>
+                        <!-- Step 5.3 -->
+                        <div class="checklist-item flex items-start space-x-4">
+                            <input type="checkbox" id="step17" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                            <label for="step17" class="w-full">
+                                <div class="font-semibold text-lg text-slate-800 step-title">5.3. Verificar conflictos de GPO</div>
+                                <p class="text-slate-600 mt-1">Una Política de Grupo (GPO) local puede interferir con la inscripción en Intune. Ejecuta <code class="text-sm bg-slate-100 p-1 rounded">rsop.msc</code> en el dispositivo y busca configuraciones en:</p>
+                                <p class="text-slate-600 mt-2 font-mono text-sm bg-slate-100 p-2 rounded">Computer Configuration > Administrative Templates > Windows Components > MDM</p>
+                                <p class="text-slate-600 mt-2">Asegúrate de que la política "Enable automatic MDM enrollment using default Microsoft Entra ID credentials" esté "No configurada" para evitar conflictos con Intune.</p>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reset Button -->
+        <div class="mt-8 text-center">
+            <button id="reset-btn" class="bg-red-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-red-700 transition-colors shadow-md">
+                <i class="fas fa-undo mr-2"></i>Reiniciar Checklist
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const totalSteps = checkboxes.length;
+
+            function updateProgress() {
+                const checkedSteps = document.querySelectorAll('.checklist-item input[type="checkbox"]:checked').length;
+                const percentage = totalSteps > 0 ? Math.round((checkedSteps / totalSteps) * 100) : 0;
+                progressBar.style.width = `${percentage}%`;
+                progressText.textContent = `${percentage}%`;
+            }
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const item = e.target.closest('.checklist-item');
+                    if (e.target.checked) {
+                        item.classList.add('completed');
+                    } else {
+                        item.classList.remove('completed');
+                    }
+                    updateProgress();
+                });
+            });
+
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const codeBlock = button.nextElementSibling;
+                    const codeToCopy = codeBlock.innerText;
+                    const textArea = document.createElement('textarea');
+                    textArea.value = codeToCopy;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        button.textContent = '¡Copiado!';
+                        button.style.backgroundColor = '#16a34a';
+                    } catch (err) {
+                        button.textContent = 'Error';
+                        button.style.backgroundColor = '#dc2626';
+                    }
+                    document.body.removeChild(textArea);
+                    setTimeout(() => {
+                        button.textContent = 'Copiar';
+                        button.style.backgroundColor = '#475569';
+                    }, 2000);
+                });
+            });
+
+            const resetButton = document.getElementById('reset-btn');
+            resetButton.addEventListener('click', () => {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                    checkbox.closest('.checklist-item').classList.remove('completed');
+                });
+                updateProgress();
+            });
+
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const isOpen = item.classList.contains('open');
+                    // Optional: close all others when one opens
+                    // accordionItems.forEach(i => i.classList.remove('open'));
+                    if (!isOpen) {
+                        item.classList.add('open');
+                    } else {
+                        item.classList.remove('open');
+                    }
+                });
+            });
+            
+            // Open the first section by default
+            if(accordionItems.length > 0) {
+                accordionItems[0].classList.add('open');
+            }
+
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
